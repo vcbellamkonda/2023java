@@ -1,0 +1,119 @@
+CHAITANYA VISWA
+ServiceNow Architect
+
+viswachaitanya@outlook.com
++16787728277
+https://www.linkedin.com/in/viswachaitanya/
+
+Experience
+======
+ServiceNow Architect
+CVS Pharmacy
+06/2023undefined
+Atlanta
+ - Customized Incident, Change and Service Catalog module in Service now as per the process requirements
+ - Onboarded new Ops teams from Legacy platform to ServiceNow and successfully migrated foundational data and Knowledge articles
+ - Creation of Catalog items, SLA's & Reports based on the new departments & Ops Teams requirements
+ - Created new Service Now integrations with event management and business applications using REST API's
+ - Performance tuning and upgrade of Service Now instances
+ - Successfully upgraded Service Now platform to Vancouver version
+ - Explore the alternatives for Redhat Decision Manager and perform proof of concept using IBM ODM and Service Now Decision Builder
+ - Migrated the existing decision flows and workflows from existing Decision Manager to IBM ODM and Service Now Decision Builder
+ - Developed Micro Services using Spring Framework & Spring cloud to integrate with Redhat Decision Manager, IBM Operational Decision Manager (ODM) and Service Now
+ - Migrated the spring boot microservices (integrations) from PCF to AKS environment
+
+Solution Architect
+Ford Motor Company Limited
+03/2014 - 05/2023
+ - Led ServiceNow migration from BMC DWPA, including POCs, strategy roadmap, and cutover plan, ensuring compatibility and feasibility.
+ - Optimized operational processes and redesigned L3/L4 procedures for ServiceNow implementation; standardized Service Catalog, SLAs, and approval flows.
+ - Collaborated with Ops and Dev teams for a seamless BMC to ServiceNow migration, maintaining daily operations.
+ - Conducted gap analysis between BMC & ServiceNow, documented customization requirements, and ensured successful implementation.
+ - Developed training materials and workshops for enterprise-wide ServiceNow adoption; prepared ITSM and CMDB data collection templates.
+ - Architected integrations for ServiceNow with 65+ enterprise solutions using REST APIs, IBM APIC, and Mid Server.
+ - Implemented CSM module, Service Catalog, all ITSM modules; migrated foundational data and Knowledge articles from BMC to ServiceNow.
+ - Drafted and implemented KPIs, reports, and dashboards for Ops teams; designed and implemented CMDB, Discovery modules, and Major Incident Management.
+ - Provided ongoing support, maintenance, regular upgrades, and performance tuning of ServiceNow instances; extended ITSM applications to meet business needs.
+
+Digital Process Automation Lead
+07/2016 - 05/2018
+ - Led the build-out of enterprise-scale Pega instances, onboarding Product Development Teams, and setting up governance for RPA, DPA & Chat Bots.
+ - Spearheaded requirement gathering, design, development, and deployment of user stories, enhancing business operations.
+ - Configured Pega components including Queue Processor, Job Scheduler, Kafka, Case Management, and integrations, improving system efficiency.
+ - Architected enterprise solutions using Situational Layer Cake, Data Model, and reusable components, collaborating with business architects for PDO enhancements.
+ - Implemented advanced monitoring with Dynatrace and PDC, conducted health checks and tuned performance to ensure Pega platform reliability.
+ - Streamlined Access Management using Security Rules and integrated with security tools, ensuring compliance with enterprise security requirements.
+
+ITSM Solution Architect
+IT4IT Applications
+03/2014 - 06/2016
+ - Migrated ITSM Processes from legacy tools to BMC DWPA, enhancing ITSD & Ops teams' functionalities.
+ - Streamlined service desk and infra ops processes; customized Incident, Change, Service Catalog modules in BMC DWPA.
+ - Created SLAs based on CSFs/CTQs; migrated configuration data using automation scripts, achieving efficiency.
+ - Integrated ITSM tool with 23 enterprise tools through REST/middleware, enhancing system interoperability.
+ - Implemented application monitoring with Splunk, Dynatrace; led technical CAB for Application Change management.
+ - Identified automation opportunities, improving Ops efficiencies; coordinated with cross-functional teams for critical support and upgrades.
+
+ITSM Solution Architect & ITSM COE Practice Lead
+Hcl
+09/2004 - 03/2014
+
+Sr Remedy Developer
+Hcl
+09/2004 - 06/2010
+
+
+Education
+======
+Executive MBA
+Epbm
+Calcutta
+ - ) from Indian Institute of Management (IIM) Calcutta
+
+B. Tech (I.T)
+Nagarjuna University
+
+
+Skills
+======
+ - Active Directory
+ - Agile
+ - Api
+ - Apis
+ - Azure
+ - BMC Remedy
+ - Bots
+ - Bpm
+ - Ci/cd
+ - Cis
+ - Cisco
+ - Cmdb
+ - Configuration
+ - Css
+ - Devops
+ - DocuSign
+ - Dynatrace
+ - Html
+ - Ibm
+ - Ibm watson
+ - Itil
+ - Itsm
+ - Java
+ - Java Spring
+ - Kafka
+ - Kpi
+ - KPI's
+ - Kubernetes
+ - Ldap
+ - Microservices
+ - Middleware
+ - Pcf
+ - Pega
+ - Performance Monitoring
+ - Performance Tuning
+ - Perl
+ - Pmp
+ - Poc
+ - Power Apps
+ - Power BI
+

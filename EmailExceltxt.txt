@@ -1,0 +1,63 @@
+spring.mail.host=smtp.example.com
+spring.mail.port=587
+spring.mail.username=your-email@example.com
+spring.mail.password=your-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+
+=================================================================
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+@Service
+public class EmailService {
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    public void sendEmailWithExcelAttachment(String to, String subject, String text) throws MessagingException, IOException {
+        // Generate Excel file
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Sample Sheet");
+
+        Row header = sheet.createRow(0);
+        header.createCell(0).setCellValue("ID");
+        header.createCell(1).setCellValue("Name");
+        header.createCell(2).setCellValue("Email");
+
+        Row row = sheet.createRow(1);
+        row.createCell(0).setCellValue(1);
+        row.createCell(1).setCellValue("John Doe");
+        row.createCell(2).setCellValue("john.doe@example.com");
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+
+        InputStreamSource attachmentSource = new ByteArrayResource(outputStream.toByteArray());
+
+        // Send email
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(text);
+        helper.addAttachment("sample.xlsx", attachmentSource);
+
+        mailSender.send(message);
+    }
+}
