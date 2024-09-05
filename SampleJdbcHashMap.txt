@@ -1,0 +1,67 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+@Repository
+public class MyRepository {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public Map<String, Object> getColumnNamesAndValues(String query) {
+        return jdbcTemplate.query(query, new ResultSetExtractor<Map<String, Object>>() {
+            @Override
+            public Map<String, Object> extractData(ResultSet rs) throws SQLException {
+                Map<String, Object> result = new HashMap<>();
+                
+                if (rs.next()) {
+                    // Get column count
+                    int columnCount = rs.getMetaData().getColumnCount();
+
+                    // Loop through columns
+                    for (int i = 1; i <= columnCount; i++) {
+                        // Get column name and value
+                        String columnName = rs.getMetaData().getColumnName(i);
+                        Object columnValue = rs.getObject(i);
+                        
+                        // Add to the result map
+                        result.put(columnName, columnValue);
+                    }
+                }
+                return result;
+            }
+        });
+    }
+}
+=========================================================================================================================
+String query = "SELECT * FROM your_table_name WHERE id = ?";
+Map<String, Object> result = myRepository.getColumnNamesAndValues(query);
+============================================================================================================================
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api")
+public class MyController {
+
+    @Autowired
+    private MyRepository myRepository;
+
+    // Define an endpoint that returns the HashMap as a JSON response
+    @GetMapping("/get-data/{id}")
+    public Map<String, Object> getData(@PathVariable("id") int id) {
+        String query = "SELECT * FROM your_table_name WHERE id = " + id;
+        return myRepository.getColumnNamesAndValues(query);
+    }
+}
