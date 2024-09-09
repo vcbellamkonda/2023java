@@ -65,3 +65,10 @@ public class MyController {
         return myRepository.getColumnNamesAndValues(query);
     }
 }
+=================================================================================================
+CASE 
+    WHEN L.DISPENSE_UNIT_TYPE_ID = 5 
+    THEN SUBSTRING(L.SHELFTAG FROM 1 FOR 6) || SUBSTRING(L.SHELFTAG FROM 8 FOR 2) || SUBSTRING(L.SHELFTAG FROM 11)
+    ELSE SUBSTRING(L.SHELFTAG FROM 5 FOR 1) || 'CAB' || SUBSTRING(L.SHELFTAG FROM 7 FOR 1) || ' ' || SUBSTRING(L.SHELFTAG FROM 10 FOR 2)
+END AS barcode
+=================================================================================================
