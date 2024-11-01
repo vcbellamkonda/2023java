@@ -1,0 +1,56 @@
+package com.example.demo.service;
+
+import com.zebra.sdk.graphics.ZebraImageFactory;
+import com.zebra.sdk.graphics.internal.ZebraImageI;
+import com.zebra.sdk.printer.ZebraPrinter;
+import com.zebra.sdk.printer.ZebraPrinterFactory;
+import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
+import com.zebra.sdk.comm.Connection;
+import com.zebra.sdk.comm.TcpConnection;
+import org.springframework.stereotype.Service;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+
+@Service
+public class ZplToPngService {
+
+    private static final String PRINTER_IP = "192.168.1.100";  // Replace with your printer's IP
+    private static final int PRINTER_PORT = 9100; // Replace with your printer's port
+
+    public String convertZplToBase64Png(String zplData) {
+        Connection connection = new TcpConnection(PRINTER_IP, PRINTER_PORT);
+        try {
+            // Open connection to the printer
+            connection.open();
+            
+            // Get Zebra printer instance
+            ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
+            
+            // Convert ZPL to image
+            ZebraImageI zebraImage = printer.getGraphicsUtil().createImageFromZpl(zplData, 300, 300);
+            BufferedImage bufferedImage = ZebraImageFactory.getImage(zebraImage);
+            
+            // Convert BufferedImage to PNG Base64 format
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", baos);
+            byte[] pngBytes = baos.toByteArray();
+
+            return "data:image/png;base64," + Base64.getEncoder().encodeToString(pngBytes);
+
+        } catch (IOException | ZebraPrinterLanguageUnknownException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            // Close the connection to the printer
+            try {
+                connection.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
