@@ -1,0 +1,105 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import reactor.core.publisher.Mono;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+class PrintServiceTest {
+
+    @Mock
+    private WebClient webClient;
+
+    @Mock
+    private WebClient.RequestBodyUriSpec uriSpec;
+
+    @Mock
+    private RequestBodySpec bodySpec;
+
+    @Mock
+    private RequestHeadersSpec<?> headersSpec;
+
+    @Mock
+    private ResponseSpec responseSpec;
+
+    @InjectMocks
+    private PrintService printService; // Replace this with your class name
+
+    private final String printServiceUrl = "http://print-service.com";
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        printService = new PrintService(webClient, printServiceUrl);
+    }
+
+    @Test
+    void testPostDataToPrintService_Success() {
+        // Mocking success response
+        when(webClient.post()).thenReturn(uriSpec);
+        when(uriSpec.uri(printServiceUrl)).thenReturn(uriSpec);
+        when(uriSpec.headers(any())).thenReturn(bodySpec);
+        when(bodySpec.bodyValue(any())).thenReturn(headersSpec);
+        when(headersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(String.class)).thenReturn(Mono.just("Success"));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer token");
+        String response = printService.postDataToPrintService(headers, new Object());
+
+        assertEquals("Success", response);
+        verify(webClient, times(1)).post();
+    }
+
+    @Test
+    void testPostDataToPrintService_BadRequest() {
+        // Mocking 400 response
+        when(webClient.post()).thenReturn(uriSpec);
+        when(uriSpec.uri(printServiceUrl)).thenReturn(uriSpec);
+        when(uriSpec.headers(any())).thenReturn(bodySpec);
+        when(bodySpec.bodyValue(any())).thenReturn(headersSpec);
+        when(headersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.onStatus(any(), any())).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(String.class)).thenReturn(Mono.error(new InvalidOptionException(7304, "Bad Request")));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer token");
+
+        Exception exception = assertThrows(InvalidOptionException.class, () -> {
+            printService.postDataToPrintService(headers, new Object());
+        });
+
+        assertEquals(7304, ((InvalidOptionException) exception).getCode());
+        assertEquals("Bad Request", exception.getMessage());
+    }
+
+    @Test
+    void testPostDataToPrintService_InternalServerError() {
+        // Mocking 500 response
+        when(webClient.post()).thenReturn(uriSpec);
+        when(uriSpec.uri(printServiceUrl)).thenReturn(uriSpec);
+        when(uriSpec.headers(any())).thenReturn(bodySpec);
+        when(bodySpec.bodyValue(any())).thenReturn(headersSpec);
+        when(headersSpec.retrieve()).thenReturn(responseSpec);
+        when(responseSpec.onStatus(any(), any())).thenReturn(responseSpec);
+        when(responseSpec.bodyToMono(String.class)).thenReturn(Mono.error(new DatabaseException(7304, "Internal Server Error")));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer token");
+
+        Exception exception = assertThrows(DatabaseException.class, () -> {
+            printService.postDataToPrintService(headers, new Object());
+        });
+
+        assertEquals(7304, ((DatabaseException) exception).getCode());
+        assertEquals("Internal Server Error", exception.getMessage());
+    }
+}
